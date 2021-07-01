@@ -1,11 +1,30 @@
+import { useHistory } from 'react-router-dom';
+
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 import googleIconImg from '../assets/images/google-icon.svg';
 import '../styles/auth.scss';
 
 import { Button } from '../components/Button';
+import { useAuth } from '../hooks/useAuth';
+
 
 export function Home() {
+  const { user, signInWithGoogle } = useAuth();
+  const history = useHistory();
+
+  async function handleCreateRoom() {
+    try {
+      if (!user) {
+        await signInWithGoogle();
+      }
+
+      history.push('/rooms/new');
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div id="page-auth">
       <aside>
@@ -17,7 +36,10 @@ export function Home() {
       <main>
         <div className="main-content">
           <img src={logoImg} alt="Letmeask" />
-          <button className="create-room">
+          <button
+            className="create-room"
+            onClick={handleCreateRoom}
+          >
             <img src={googleIconImg} alt="Logo do Google" />
             Cire sua sala com o Google
           </button>
