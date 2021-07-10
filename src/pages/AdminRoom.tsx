@@ -1,4 +1,3 @@
-import { FormEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { database } from '../services/firebase';
 import { useAuth } from '../hooks/useAuth';
@@ -47,7 +46,8 @@ export function AdminRoom() {
               key={question.id}
               content={question.content}
               author={question.author}
-            />
+            >
+              </Question>
           ))}
         </div>
       </main>
