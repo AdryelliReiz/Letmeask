@@ -1,46 +1,70 @@
-# Getting Started with Create React App
+<img src="./src/assets/images/logo.svg" alt="logo" />
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 align="center">Letmeask</h1>
+🗣 Letmeask is a platform where stremers can create rooms so their followers can ask questions, and then the room owner can respond live quietly without worrying about the chat getting in the way.</br></br>
+<img src="./public/prints/printHomePage.png" alt="print" />
+</br>
 
-## Available Scripts
+<p align="center" >
+  <a href="#about" >About</a> • 
+  <a href="#how-to-use"# >How to use</a> • 
+  <a href="#technologies" >Technologies</a>
+</p></br>
 
-In the project directory, you can run:
+## About
+Letmeask is a project created during Rocketseat's NLW#6. It was created with React.js and Firebase.
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## How to use
+Before you begin, you will need to have the following tools installed on your machine:</br>
+[Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/).</br>
+In addition, it is good to have an editor to work with the code as [VSCode](https://code.visualstudio.com/).
+Remembering that to run the application it is necessary to create a project in firebase and put the settings in the .env file (which you must create).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Running the app
+Clone this repository
+```bash
+git clone https://github.com/AdryelliReiz/Letmeask.git
+```
+</br>
 
-### `yarn test`
+Access the project folder in the / cmd terminal
+```bash
+cd Letmeask
+```
+</br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Install the dependencies
+```bash
+npm install
+```
+or if you are already familiar with yarn
+```bash
+yarn add
+```
+</br>
 
-### `yarn build`
+Then run the command to start the application under development
+```bash
+npm start //or
+yarn start
+```
+</br>
+Now just access http://localhost:3000/
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The following tools were used in the construction of the project:</br>
+- [React.js](https://pt-br.reactjs.org/)
+- [Firebase](https://firebase.google.com/docs)
+- [TypeScript](https://www.typescriptlang.org/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+##  Autor
 
-### `yarn eject`
+<a href="https://www.instagram.com/adryellireiz"/>
+<img style = "border-radius: 50%;" src = "https://avatars.githubusercontent.com/u/66762439?s=400&u=cf236b0a21eead165ffca14bd543a048b27a25cb&v=4" width = "100px;" alt = "" />
+ <br />
+ <sub> <b> Adryelli Reis </b> </sub> </a> 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Made with ❤️ by Adryelli Reis !!
