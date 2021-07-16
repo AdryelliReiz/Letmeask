@@ -22,6 +22,7 @@
 
   p {
     color: #29292e;
+    position: inherit;
   }
 
   footer {
@@ -52,6 +53,20 @@
       gap: 16px;
     }
 
+    span {
+      display: flex;
+      align-items: center;
+
+      p {
+        color: #737380;
+        font-size: 1.2rem;
+      }
+
+      img {
+        margin: 0 0 5px 5px;
+      }
+    }
+
     button {
       border: 0;
       background: transparent;
@@ -75,6 +90,14 @@
 
       &:hover {
         filter: brightness(0.7);
+      }
+    }
+  }
+
+  @media (max-width: 500px) {
+    footer {
+      > div {
+        gap: 8px;
       }
     }
   }

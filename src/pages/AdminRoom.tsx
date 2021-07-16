@@ -1,6 +1,5 @@
 import { useHistory, useParams } from 'react-router-dom';
 import { database } from '../services/firebase';
-//import { useAuth } from '../hooks/useAuth';
 import { useRoom } from '../hooks/useRoom';
 
 import { Button } from '../components/Button';
@@ -11,6 +10,7 @@ import logoImg from '../assets/images/logo.svg';
 import deleteImg from '../assets/images/delete.svg';
 import checkImg from '../assets/images/check.svg';
 import answerImg from '../assets/images/answer.svg';
+import likeImg from '../assets/images/like.svg';
 import '../styles/room.scss';
 
 
@@ -19,7 +19,6 @@ type RoomParams = {
 }
 
 export function AdminRoom() {
-  //const {user} = useAuth();
   const params = useParams<RoomParams>();
   const roomId = params.id;
   const history = useHistory();
@@ -84,6 +83,10 @@ export function AdminRoom() {
             >
               {!question.isAnswered && (
                 <>
+                  <span>
+                    <p>{question.likeCount}</p>
+                    <img src={likeImg} alt="Likes" />
+                  </span>
                   <button
                     type="button"
                     onClick={() => handleCheckQuestionAsAnswered(question.id)}
