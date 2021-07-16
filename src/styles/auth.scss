@@ -30,6 +30,12 @@
     }
   }
 
+  @media (max-width: 800px) {
+    aside {
+      display: none;
+    }
+  }
+
   main {
     flex: 8;
     padding: 0 32px;

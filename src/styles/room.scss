@@ -27,7 +27,7 @@
 
   main {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0 auto 24px;
 
     .room-title {
       margin: 32px 0 24px;
@@ -107,6 +107,49 @@
 
     .question-list {
       margin-top: 32px;
+    }
+  }
+  @media (max-width: 860px) {
+    main {
+      width: 460px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    header {
+      padding: 16px;
+      .content {
+        button {
+          &.outline {
+            font-size: 12px;
+            padding: 0 8px;
+          }
+        }
+      }
+    }
+    main {
+      width: 90%;
+
+      .room-title {
+        display: block;
+
+        h1 {
+          margin-bottom: 5px;
+        }
+        span {
+          margin: 0;
+          padding: 8px;
+          font-size: 12px;
+        }
+      }
+      form {
+        .form-footer {
+          button {
+            height: 42px;
+            padding: 0 20px;
+          }
+        }
+      }
     }
   }
 }
