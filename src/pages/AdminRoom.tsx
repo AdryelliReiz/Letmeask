@@ -10,6 +10,7 @@ import logoImg from '../assets/images/logo.svg';
 import deleteImg from '../assets/images/delete.svg';
 import checkImg from '../assets/images/check.svg';
 import answerImg from '../assets/images/answer.svg';
+import likeImg from '../assets/images/like.svg';
 import '../styles/room.scss';
 
 
@@ -82,6 +83,10 @@ export function AdminRoom() {
             >
               {!question.isAnswered && (
                 <>
+                  <span>
+                    <p>{question.likeCount}</p>
+                    <img src={likeImg} alt="Likes" />
+                  </span>
                   <button
                     type="button"
                     onClick={() => handleCheckQuestionAsAnswered(question.id)}
