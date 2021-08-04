@@ -109,6 +109,51 @@
       margin-top: 32px;
     }
   }
+
+  .screen-modal {
+    position: fixed;
+    background: rgba(232, 232, 232, 0.4);
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .modal {
+      background: #fefefe;
+      max-width: 800px;
+      padding: 24px;
+      border-radius: 8px;
+
+      .buttons {
+        margin-top: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        button {
+          width: 45%;
+          height: 40px;
+          border: none;
+          border-radius: 8px;
+          font-size: 20px;
+          font-weight: 500;
+        }
+
+        .no-button {
+          background: #c5c5c5;
+          color: #29292e;
+        }
+
+        .yes-button {
+          background: #835afd;
+          color: #fff;
+        }
+      }
+    }
+  }
+
   @media (max-width: 860px) {
     main {
       width: 460px;

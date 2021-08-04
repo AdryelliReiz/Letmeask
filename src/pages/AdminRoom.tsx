@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { database } from '../services/firebase';
 import { useRoom } from '../hooks/useRoom';
@@ -19,6 +20,9 @@ type RoomParams = {
 }
 
 export function AdminRoom() {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [questionIdConfirm, setQuestionIdConfirm] = useState('');
+
   const params = useParams<RoomParams>();
   const roomId = params.id;
   const history = useHistory();
@@ -46,11 +50,15 @@ export function AdminRoom() {
   }
 
   async function handleDeleteQuestion(questionId: string) {
-    if (window.confirm('Tem certeza que você deseja remover essa pergunta?')) {
-      await database.ref(`rooms/${roomId}/questions/${questionId}`).remove()
-    }
+    setIsOpenModal(true);
+    setQuestionIdConfirm(questionId);
   }
 
+  async function handleConfirmDeleteQuestion(questionId: string) {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
+
+    setIsOpenModal(false)
+  }
   return (
     <div id="page-room" >
       <header>
@@ -111,6 +119,29 @@ export function AdminRoom() {
           ))}
         </div>
       </main>
+      
+      {isOpenModal && (
+        <div className="screen-modal" >
+          <div className="modal" >
+            <h3>Tem certeza que você deseja remover essa pergunta?</h3>
+
+            <div className="buttons" >
+              <button
+                className="no-button"
+                onClick={() => setIsOpenModal(false)}
+              >
+                No
+              </button>
+              <button
+                className="yes-button"
+                onClick={() => handleConfirmDeleteQuestion(questionIdConfirm)}
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
