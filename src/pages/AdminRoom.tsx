@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { database } from '../services/firebase';
 import { useRoom } from '../hooks/useRoom';
+import toast, { Toaster } from 'react-hot-toast';
 
 import { Button } from '../components/Button';
 import { RoomCode } from '../components/RoomCode';
@@ -57,9 +58,24 @@ export function AdminRoom() {
   }
 
   async function handleConfirmDeleteQuestion(questionId: string) {
-    await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
+    try {
+      await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
 
-    setIsOpenModal(false)
+      setIsOpenModal(false)
+    } catch (error) {
+     toast.error("Erro ao remover a pergunta", {
+        icon: "❌",
+        duration: 5000,
+        position: "bottom-right",
+        style: {
+          fontSize: '18px',
+          background: '#fefefe',
+          border: '3px solid #835afd',
+          borderRadius: '10px',
+        }
+     })
+      setIsOpenModal(false)
+    }
   }
 
   async function confirmRoomEnded() {
@@ -184,6 +200,7 @@ export function AdminRoom() {
             </div>
       
             )}
+            <Toaster />
             </>
           ) 
       }
