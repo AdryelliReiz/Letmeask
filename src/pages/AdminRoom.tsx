@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { database } from '../services/firebase';
 import { useRoom } from '../hooks/useRoom';
+import toast, { Toaster } from 'react-hot-toast';
 
 import { Button } from '../components/Button';
 import { RoomCode } from '../components/RoomCode';
@@ -12,6 +13,7 @@ import deleteImg from '../assets/images/delete.svg';
 import checkImg from '../assets/images/check.svg';
 import answerImg from '../assets/images/answer.svg';
 import likeImg from '../assets/images/like.svg';
+import warningImg from '../assets/images/warning.svg';
 import '../styles/room.scss';
 
 
@@ -22,6 +24,7 @@ type RoomParams = {
 export function AdminRoom() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [questionIdConfirm, setQuestionIdConfirm] = useState('');
+  const [isRoomEnded, setIsRoomEnded] = useState(false);
 
   const params = useParams<RoomParams>();
   const roomId = params.id;
@@ -55,93 +58,152 @@ export function AdminRoom() {
   }
 
   async function handleConfirmDeleteQuestion(questionId: string) {
-    await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
+    try {
+      await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
 
-    setIsOpenModal(false)
+      setIsOpenModal(false)
+    } catch (error) {
+     toast.error("Erro ao remover a pergunta", {
+        icon: "❌",
+        duration: 5000,
+        position: "bottom-right",
+        style: {
+          fontSize: '18px',
+          background: '#fefefe',
+          border: '3px solid #835afd',
+          borderRadius: '10px',
+        }
+     })
+      setIsOpenModal(false)
+    }
   }
+
+  async function confirmRoomEnded() {
+    const databaseRef = await database.ref(`rooms/${roomId}`).get();
+
+    if (databaseRef.val().endedAt) {
+      setIsRoomEnded(true);
+    }
+  }
+
+  useEffect(() => {
+    confirmRoomEnded()
+  })
+
   return (
     <div id="page-room" >
-      <header>
-        <div className="content">
-          <img src={logoImg} alt="Letmeask" />
-          <div>
-            <RoomCode code={roomId} />
-            <Button
-              isOutlined
-              onClick={handleEndRoom}
-            >Encerrar sala</Button>
-          </div>
-        </div>
-      </header>
+      {isRoomEnded
+        ? (
+          <>
+            <header>
+                <div className="content">
+                  <img src={logoImg} alt="Letmeask" />
+                  <div/>
+                </div>
+            </header>
 
-      <main>
-        <div className="room-title">
-          <h1>Sala {title}</h1>
-          {questions.length > 0 && <span>{questions.length} pergunta(s)</span>} 
-        </div>
+            <main>
+              <div className="room-ended" >
+                
+                <div className="info" >
+                  <div>
+                    <h1>Sala encerrada!</h1>
+                    <p>Por favor, retorne para para a <Link to="/"> página home</Link>.</p>
+                  </div>
+                  <img src={warningImg} alt="warning" />
+                </div>
+              </div>
+            </main>
+          </>
+        )
+          : (
+            <>
+              <header>
+                <div className="content">
+                  <img src={logoImg} alt="Letmeask" />
+                  <div>
+                    <RoomCode code={roomId} />
+                    <Button
+                      isOutlined
+                      onClick={handleEndRoom}
+                    >Encerrar sala</Button>
+                  </div>
+                </div>
+              </header>
 
-        <div className="question-list">
-          {questions.map(question => (
-            <Question
-              key={question.id}
-              content={question.content}
-              author={question.author}
-              isAnswered={question.isAnswered}
-              isHighlight={question.isHighlighted}
-            >
-              {!question.isAnswered && (
-                <>
-                  <span>
-                    <p>{question.likeCount}</p>
-                    <img src={likeImg} alt="Likes" />
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => handleCheckQuestionAsAnswered(question.id)}
-                  >
-                    <img src={checkImg} alt="Marcar pergunta como respondida" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleHighlightQuestion(question.id)}
-                  >
-                    <img src={answerImg} alt="Destacar pertgunta" />
-                  </button>
-                </>
-              )}
-              <button
-                type="button"
-                onClick={() => handleDeleteQuestion(question.id)}
-              >
-                <img src={deleteImg} alt="Remover pergunta" />
-              </button>
-            </Question>
-          ))}
-        </div>
-      </main>
-      
-      {isOpenModal && (
-        <div className="screen-modal" >
-          <div className="modal" >
-            <h3>Tem certeza que você deseja remover essa pergunta?</h3>
+              <main>
+                <div className="room-title">
+                  <h1>Sala {title}</h1>
+                  {questions.length > 0 && <span>{questions.length} pergunta(s)</span>} 
+                </div>
 
-            <div className="buttons" >
-              <button
-                className="no-button"
-                onClick={() => setIsOpenModal(false)}
-              >
-                No
-              </button>
-              <button
-                className="yes-button"
-                onClick={() => handleConfirmDeleteQuestion(questionIdConfirm)}
-              >
-                Yes
-              </button>
+                <div className="question-list">
+                  {questions.map(question => (
+                    <Question
+                      key={question.id}
+                      content={question.content}
+                      author={question.author}
+                      isAnswered={question.isAnswered}
+                      isHighlight={question.isHighlighted}
+                    >
+                      {!question.isAnswered && (
+                        <>
+                          <span>
+                            <p>{question.likeCount}</p>
+                            <img src={likeImg} alt="Likes" />
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => handleCheckQuestionAsAnswered(question.id)}
+                          >
+                            <img src={checkImg} alt="Marcar pergunta como respondida" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleHighlightQuestion(question.id)}
+                          >
+                            <img src={answerImg} alt="Destacar pertgunta" />
+                          </button>
+                        </>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteQuestion(question.id)}
+                      >
+                        <img src={deleteImg} alt="Remover pergunta" />
+                      </button>
+                    </Question>
+                  ))}
+                </div>
+              </main>
+              
+              {isOpenModal && (
+                <div className="screen-modal" >
+                  <div className="modal" >
+                    <h3>Tem certeza que você deseja remover essa pergunta?</h3>
+
+                    <div className="buttons" >
+                      <button
+                        className="no-button"
+                        onClick={() => setIsOpenModal(false)}
+                      >
+                        No
+                      </button>
+                      <button
+                        className="yes-button"
+                        onClick={() => handleConfirmDeleteQuestion(questionIdConfirm)}
+                      >
+                        Yes
+                      </button>
+                    </div>
+                  </div>
             </div>
-          </div>
-        </div>
-      )}
+      
+            )}
+            <Toaster />
+            </>
+          ) 
+      }
     </div>
   );
 }

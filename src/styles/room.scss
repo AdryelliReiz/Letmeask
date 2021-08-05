@@ -29,6 +29,31 @@
     max-width: 800px;
     margin: 0 auto 24px;
 
+    .room-ended {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin: 48px auto;
+
+      .info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        div {
+          margin-right: 24px;
+          p {
+            font-size: 18px;
+          }
+        }
+      }
+
+      img {
+        width: 120px;
+      }
+    }
+
     .room-title {
       margin: 32px 0 24px;
       display: flex;
@@ -123,7 +148,7 @@
     .modal {
       background: #fefefe;
       max-width: 800px;
-      padding: 24px;
+      padding: 36px 48px;
       border-radius: 8px;
 
       .buttons {
@@ -139,6 +164,12 @@
           border-radius: 8px;
           font-size: 20px;
           font-weight: 500;
+          transition: filter 0.2s;
+          cursor: pointer;
+
+          &:hover {
+            filter: brightness(0.9);
+          }
         }
 
         .no-button {
@@ -161,6 +192,19 @@
   }
 
   @media (max-width: 500px) {
+    .room-ended {
+      .info {
+        div {
+          h1 {
+            font-size: 24px;
+          }
+          p {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+
     header {
       padding: 16px;
       .content {
